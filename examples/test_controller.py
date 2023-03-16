@@ -23,6 +23,9 @@ class TestController(KesslerController):
 
         return thrust, turn_rate, fire
 
+    def relative_vec(self, ships, asteroids):
+        pass
+
     @property
     def name(self) -> str:
         return "Test Controller"
