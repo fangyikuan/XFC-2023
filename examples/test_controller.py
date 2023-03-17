@@ -23,6 +23,8 @@ class TestController(KesslerController):
             vecs[i,2] = np.sqrt(vecs[i,0]**2+vecs[i, 1]**2)
             vecs[i, 3] = np.arctan(vecs[i, 1]/vecs[i, 0])
             vecs[i, 3] = vecs[i, 3] / 3.14 * 180
+            if vecs[i, 3] < 0:
+                vecs[i, 3] = vecs[i, 3] + 360
         return vecs
     def actions(self, ship_state: Dict, game_state: Dict) -> Tuple[float, float, bool]:
         """
@@ -35,13 +37,13 @@ class TestController(KesslerController):
         target = np.argmin(vec[:, 2])
         ## heading
         turn_rate = vec[target, 3] - ship_state['heading']
-        turn_rate = turn_rate * 1.1
+        turn_rate = turn_rate * 0.7
         ## speed
         # thrust = vec[target, 2] * np.cos(180-vec[target, 3]+ship_state['heading'])
         if abs(vec[target, 3] - ship_state['heading']) <= 90:
-            thrust = 70
+            thrust = -80
         else:
-            thrust = -70
+            thrust = 80
         fire = True
         # targets = np.argwhere(vec[:,2] < 100)
         # if len(targets) == 0:
