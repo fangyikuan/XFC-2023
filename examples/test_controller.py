@@ -35,9 +35,13 @@ class TestController(KesslerController):
         target = np.argmin(vec[:, 2])
         ## heading
         turn_rate = vec[target, 3] - ship_state['heading']
-        turn_rate = turn_rate
+        turn_rate = turn_rate * 1.1
         ## speed
-        thrust = vec[target, 2] * np.cos(180-vec[target, 3]+ship_state['heading'])
+        # thrust = vec[target, 2] * np.cos(180-vec[target, 3]+ship_state['heading'])
+        if abs(vec[target, 3] - ship_state['heading']) <= 90:
+            thrust = 70
+        else:
+            thrust = -70
         fire = True
         # targets = np.argwhere(vec[:,2] < 100)
         # if len(targets) == 0:
